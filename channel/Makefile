@@ -1,12 +1,15 @@
-# Concurrency
-Assignments for concurrent programming
+#JAVA = ""
 
-#### How to run:
+run:
+	java -classpath ./target channel.ChannelImpl
 
-```
-From the shell prompt/Terminal (Ubuntu/Debian) run:
+class:
+	mkdir -p "./target"
+	javac ChannelImpl.java -d ./target
 
-make help
+clean:
+	rm -f *.class
+	rm -rdf ./target 
 
 help:
 	@echo 'Cleaning targets:'
@@ -16,5 +19,3 @@ help:
 	@echo ''
 	@echo 'Configuration targets:'
 	@echo ''
-
-```
