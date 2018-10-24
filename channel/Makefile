@@ -5,7 +5,7 @@ run:
 
 class:
 	mkdir -p "./target"
-	javac ChannelImpl.java -d ./target
+	javac ChannelImpl.java Channel.java -Xdiags:verbose -d ./target
 
 clean:
 	rm -f *.class
@@ -13,9 +13,7 @@ clean:
 
 help:
 	@echo 'Cleaning targets:'
-	@echo '  clean - Remove most generated files but keep the source code'
-	@echo '  class - Compile the source code to target'
-	@echo '  clean - Remove all generated files'
-	@echo ''
-	@echo 'Configuration targets:'
+	@echo '  run    -   Execute the compiled source code'
+	@echo '  class  -   Compile the source code to target'
+	@echo '  clean  -   Remove all generated files'
 	@echo ''

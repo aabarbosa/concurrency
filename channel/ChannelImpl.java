@@ -1,20 +1,22 @@
 package channel;
 
-
+import channel.Channel;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.Queue;
-import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ExecutorService;
 
 /*
     A channel is a wired structure that holds messages prior to processing. 
 */
-public class ChannelImpl {
+public class ChannelImpl implements Channel {
 
-    Queue<String> bucketOfMessages;
+    BlockingQueue<String> bucketOfMessages;
 
     public ChannelImpl(int numberOfMessages) {
-        this.bucketOfMessages = new SynchronousQueue<String>();
+        this.bucketOfMessages = getInstance();
     }
 
     public synchronized void putMessage(String str) {
@@ -31,23 +33,35 @@ public class ChannelImpl {
         return bucketOfMessages.poll();
     } 
 
-    public static void main(String[] args) {
-        /*
-        Executor threads = new 
-        ThreadPoolExecutor(1, 4, 1, TimeUnit.SECONDS, workQueue);
+    public BlockingQueue getInstance(){
+        return bucketOfMessages;
+    }
+    public String toString(){
+        return bucketOfMessages.toString();
+    }
 
-        threads.execute(command);
-        */
+
+    /* Work in progress */
+    public static void main(String[] args) throws InterruptedException {
 
         ChannelImpl c = new ChannelImpl(10);
+                
+        ExecutorService threads = new //TODO: Solve null pointer exception
+        ThreadPoolExecutor(1, 4, 1, TimeUnit.SECONDS, c.getInstance());
 
-        /* Linear */
-        c.putMessage("These guy are pretty smart");
-        c.putMessage("They talk about complexity smartly");
-        c.putMessage("They talk about complexity smartly");
-        
-        c.takeMessage();
-        c.takeMessage();
+        int numberOfMessages = 10; //x2
+        for (int i = 0; i < numberOfMessages; i++) {
+            c.putMessage("These guy are pretty smart " + i);
+            c.putMessage("They talk about complexity smartly " + i);
+        }
+
+        while (!c.getInstance().isEmpty()){
+            threads.execute(()-> c.takeMessage());
+        }
+        threads.shutdown();
+		threads.awaitTermination(4000, TimeUnit.SECONDS);
+
+        System.out.println("out: " + c.toString());
     }
 
 }
