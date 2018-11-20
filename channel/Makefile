@@ -1,15 +1,14 @@
 #JAVA = ""
 
 run:
-	java -classpath ./target channel.ChannelImpl
-
+	java -classpath ./target City
 class:
 	mkdir -p "./target"
-	javac ChannelImpl.java Channel.java -Xdiags:verbose -d ./target
+	javac City.java -Xdiags:verbose -d ./target
 
 clean:
 	rm -f *.class
-	rm -rdf ./target 
+	rm -rdf ./target/*
 
 help:
 	@echo 'Cleaning targets:'

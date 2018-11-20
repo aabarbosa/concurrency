@@ -2,8 +2,8 @@ package channel;
 
 public interface Channel {
 
-    public  void putMessage(String message);
+    public  void putMessage(int message) throws InterruptedException;
 
-    public  String takeMessage();
+    public  String takeMessage() throws InterruptedException;
 
 }
