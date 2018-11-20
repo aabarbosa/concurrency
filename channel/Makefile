@@ -1,15 +1,10 @@
 #JAVA = ""
 
 run:
-	java -classpath ./target channel.ChannelImpl
-
-pc:
-	javac ProducerConsumerProblem.java -Xdiags:verbose -d ./target
-runpc:
-	java -classpath ./target ProducerConsumerProblem
+	java -classpath ./target City
 class:
 	mkdir -p "./target"
-	javac ChannelImpl.java Channel.java -Xdiags:verbose -d ./target
+	javac City.java -Xdiags:verbose -d ./target
 
 clean:
 	rm -f *.class
